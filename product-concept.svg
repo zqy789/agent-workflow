@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2400" height="1680" viewBox="0 0 2400 1680" role="img" aria-labelledby="title desc">
+<title id="title">研发协作与上下文流转：产品概念图</title>
+<desc id="desc">组织提供角色与责任，需求创造者提出目标。自定义图中多个节点的产物汇入接收节点，由节点 Agent 适配。共享有效上下文支持各节点和全局 Agent。缺少关键信息时后台通知人工，补充或审批后继续，最终事件和产物回到需求创造者。</desc>
+<defs>
+  <marker id="blue" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto"><path d="M 1 1 L 11 6 L 1 11 Z" fill="#376BC5"/></marker>
+  <marker id="green" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="8" markerHeight="8" orient="auto"><path d="M 1 1 L 11 6 L 1 11 Z" fill="#428E76"/></marker>
+  <marker id="purple" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="8" markerHeight="8" orient="auto"><path d="M 1 1 L 11 6 L 1 11 Z" fill="#9273AE"/></marker>
+  <marker id="orange" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="8" markerHeight="8" orient="auto"><path d="M 1 1 L 11 6 L 1 11 Z" fill="#CC873C"/></marker>
+  <marker id="gray" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="8" markerHeight="8" orient="auto"><path d="M 1 1 L 11 6 L 1 11 Z" fill="#A2ACB8"/></marker>
+</defs>
+<rect width="2400" height="1680" fill="#F7F9FC"/>
+
+<text x="100" y="80" text-anchor="start" fill="#70809A" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="25" font-weight="600">PRODUCT CONCEPT / v0.1</text>
+<text x="100" y="170" text-anchor="start" fill="#182B48" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="64" font-weight="600">研发协作与上下文流转</text>
+<text x="103" y="223" text-anchor="start" fill="#697B92" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="30" font-weight="400">Web SaaS · 首期研发团队 · 人与 Agent 共同完成交付</text>
+<rect x="565" y="555" width="1270" height="585" rx="32" fill="#FFFFFF" stroke="#D8E2EB" stroke-width="2"/>
+<text x="615" y="618" text-anchor="start" fill="#253952" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="40" font-weight="600">项目 · 需求协作图</text>
+<text x="616" y="660" text-anchor="start" fill="#76879A" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="27" font-weight="400">用户自定义 · 抽象节点 · 随时增删改</text>
+<path d="M 1200 430 L 1200 555" fill="none" stroke="#376BC5" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blue)"/>
+<path d="M 1475 849 L 1475 720 L 1795 720 L 1795 357 L 1485 357" fill="none" stroke="#376BC5" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blue)"/>
+<path d="M 465 585 L 565 585" fill="none" stroke="#A2ACB8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="10 10" marker-end="url(#gray)"/>
+<path d="M 465 1012 L 565 1012" fill="none" stroke="#A2ACB8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="10 10" marker-end="url(#gray)"/>
+<path d="M 1025 761 L 1110 761 L 1110 885 L 1260 885" fill="none" stroke="#428E76" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#green)"/>
+<path d="M 1025 906 L 1260 906" fill="none" stroke="#428E76" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#green)"/>
+<path d="M 1025 1051 L 1140 1051 L 1140 953 L 1260 953" fill="none" stroke="#428E76" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#green)"/>
+<path d="M 1000 1140 L 1000 1230" fill="none" stroke="#9273AE" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#purple)"/>
+<path d="M 1430 1230 L 1430 1140" fill="none" stroke="#9273AE" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#purple)"/>
+<path d="M 1835 1330 L 2340 1330 L 2340 400 L 2305 400" fill="none" stroke="#9273AE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#purple)"/>
+<path d="M 1925 440 L 1860 440 L 1860 520 L 1650 520 L 1650 555" fill="none" stroke="#9273AE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="10 10" marker-end="url(#purple)"/>
+<path d="M 1690 925 L 1855 925 L 1855 715 L 1930 715" fill="none" stroke="#CC873C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#orange)"/>
+<path d="M 2120 780 L 2120 845" fill="none" stroke="#CC873C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#orange)"/>
+<path d="M 1930 970 L 1880 970 L 1880 1095 L 1475 1095 L 1475 1009" fill="none" stroke="#CC873C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#orange)"/>
+<rect x="915" y="285" width="570" height="145" rx="24" fill="#EAF1FE" stroke="#A2BDE8" stroke-width="2"/>
+<text x="1200" y="346" text-anchor="middle" fill="#254C8B" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="42" font-weight="600">需求创造者</text>
+<text x="1200" y="394" text-anchor="middle" fill="#57739D" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="28" font-weight="400">目标 · 约束 · 最终验收</text>
+<rect x="95" y="480" width="370" height="195" rx="24" fill="#F0F3F7" stroke="#D5DDE6" stroke-width="2"/>
+<text x="129" y="542" text-anchor="start" fill="#3C4E65" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="37" font-weight="600">组织架构</text>
+<text x="129" y="591" text-anchor="start" fill="#66788E" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="28" font-weight="400">人员 · 角色 · 职责</text>
+<text x="129" y="638" text-anchor="start" fill="#66788E" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="25" font-weight="400">为项目分配协作责任</text>
+<rect x="95" y="900" width="370" height="225" rx="24" fill="#F0F3F7" stroke="#D5DDE6" stroke-width="2"/>
+<text x="129" y="961" text-anchor="start" fill="#3C4E65" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="37" font-weight="600">能力配置</text>
+<text x="129" y="1010" text-anchor="start" fill="#66788E" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="28" font-weight="400">MCP 工具连接</text>
+<text x="129" y="1052" text-anchor="start" fill="#66788E" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="28" font-weight="400">可配置 Agent 内核</text>
+<text x="129" y="1094" text-anchor="start" fill="#66788E" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="28" font-weight="400">任意节点流水线</text>
+<rect x="655" y="705" width="370" height="112" rx="20" fill="#EAF6F1" stroke="#95C7B5" stroke-width="2"/>
+<text x="840" y="752" text-anchor="middle" fill="#285D4B" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="32" font-weight="600">节点 A · Agent</text>
+<text x="840" y="790" text-anchor="middle" fill="#628475" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="25" font-weight="400">输入要求 / 产物</text>
+<rect x="655" y="850" width="370" height="112" rx="20" fill="#EAF6F1" stroke="#95C7B5" stroke-width="2"/>
+<text x="840" y="897" text-anchor="middle" fill="#285D4B" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="32" font-weight="600">节点 B · Agent</text>
+<text x="840" y="935" text-anchor="middle" fill="#628475" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="25" font-weight="400">输入要求 / 产物</text>
+<rect x="655" y="995" width="370" height="112" rx="20" fill="#EAF6F1" stroke="#95C7B5" stroke-width="2"/>
+<text x="840" y="1042" text-anchor="middle" fill="#285D4B" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="32" font-weight="600">节点 C · Agent</text>
+<text x="840" y="1080" text-anchor="middle" fill="#628475" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="25" font-weight="400">输入要求 / 产物</text>
+<rect x="1260" y="849" width="430" height="160" rx="24" fill="#DFF1E9" stroke="#71B298" stroke-width="2"/>
+<text x="1475" y="912" text-anchor="middle" fill="#245743" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="37" font-weight="600">节点 D · Agent</text>
+<text x="1475" y="965" text-anchor="middle" fill="#567B6C" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="29" font-weight="400">多依赖适配与交付</text>
+<rect x="565" y="1230" width="1270" height="200" rx="28" fill="#F0ECF7" stroke="#C6B4DA" stroke-width="2"/>
+<text x="610" y="1295" text-anchor="start" fill="#634780" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="43" font-weight="600">共享有效上下文</text>
+<text x="610" y="1351" text-anchor="start" fill="#816595" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="31" font-weight="400">目标 · 已确认决策 · 产物版本 · 进度 · 未决问题</text>
+<text x="610" y="1396" text-anchor="start" fill="#9581A4" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="26" font-weight="400">保留来源，识别变化，复用已确认信息</text>
+<rect x="1925" y="300" width="380" height="200" rx="24" fill="#F0ECF7" stroke="#C6B4DA" stroke-width="2"/>
+<text x="1960" y="363" text-anchor="start" fill="#634780" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="38" font-weight="600">全局 Agent</text>
+<text x="1960" y="413" text-anchor="start" fill="#816595" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="28" font-weight="400">协调推进 · 宏观进度</text>
+<text x="1960" y="458" text-anchor="start" fill="#816595" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="28" font-weight="400">阻塞与交付汇总</text>
+<rect x="1930" y="650" width="380" height="130" rx="22" fill="#FFF2E3" stroke="#E2BD8D" stroke-width="2"/>
+<text x="2120" y="704" text-anchor="middle" fill="#9B652E" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="35" font-weight="600">后台通知</text>
+<text x="2120" y="749" text-anchor="middle" fill="#AA7A47" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="28" font-weight="400">Web 待办 · 钉钉</text>
+<rect x="1930" y="845" width="380" height="180" rx="22" fill="#FFF2E3" stroke="#E2BD8D" stroke-width="2"/>
+<text x="2120" y="902" text-anchor="middle" fill="#9B652E" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="36" font-weight="600">人工介入</text>
+<text x="2120" y="953" text-anchor="middle" fill="#AA7A47" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="28" font-weight="400">补充信息 · 审批退回</text>
+<text x="2120" y="993" text-anchor="middle" fill="#B38D62" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="25" font-weight="400">确认后继续工作</text>
+<rect x="1110.0" y="474" width="180" height="37" rx="9" fill="#F7F9FC"/>
+<text x="1200" y="501" text-anchor="middle" fill="#376BC5" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="27" font-weight="400">需求与约束</text>
+<rect x="1495.0" y="381" width="260" height="37" rx="9" fill="#F7F9FC"/>
+<text x="1625" y="408" text-anchor="middle" fill="#376BC5" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="27" font-weight="400">事件 + 实际产物</text>
+<rect x="1599.5" y="467" width="175" height="35" rx="9" fill="#F7F9FC"/>
+<text x="1687" y="492" text-anchor="middle" fill="#9273AE" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="25" font-weight="400">按授权协调</text>
+<text x="514" y="549" text-anchor="middle" fill="#94A1B0" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="24" font-weight="400">责任</text>
+<text x="1180" y="805" text-anchor="middle" fill="#428E76" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="25" font-weight="400">依赖产物</text>
+<rect x="1969.0" y="592" width="300" height="36" rx="9" fill="#F7F9FC"/>
+<text x="2119" y="618" text-anchor="middle" fill="#CC873C" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="26" font-weight="400">缺关键信息 / 待审批</text>
+<rect x="1556.0" y="1043" width="180" height="35" rx="9" fill="#F7F9FC"/>
+<text x="1646" y="1068" text-anchor="middle" fill="#CC873C" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="25" font-weight="400">补充 / 决定</text>
+<rect x="724.0" y="1164" width="230" height="36" rx="9" fill="#F7F9FC"/>
+<text x="839" y="1190" text-anchor="middle" fill="#9273AE" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="26" font-weight="400">记录变化与交付</text>
+<rect x="1495.0" y="1164" width="230" height="36" rx="9" fill="#F7F9FC"/>
+<text x="1610" y="1190" text-anchor="middle" fill="#9273AE" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="26" font-weight="400">复用有效上下文</text>
+<rect x="1966.0" y="1279" width="240" height="35" rx="9" fill="#F7F9FC"/>
+<text x="2086" y="1304" text-anchor="middle" fill="#9273AE" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="25" font-weight="400">整体状态与证据</text>
+<text x="1200" y="1523" text-anchor="middle" fill="#344B69" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="36" font-weight="500">需求驱动协作，事件与产物回传，成果交付创造者</text>
+<circle cx="650" cy="1592" r="8" fill="#376BC5"/>
+<text x="674" y="1602" text-anchor="start" fill="#7C8BA0" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="25" font-weight="400">需求与交付</text>
+<circle cx="970" cy="1592" r="8" fill="#428E76"/>
+<text x="994" y="1602" text-anchor="start" fill="#7C8BA0" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="25" font-weight="400">节点依赖</text>
+<circle cx="1270" cy="1592" r="8" fill="#9273AE"/>
+<text x="1294" y="1602" text-anchor="start" fill="#7C8BA0" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="25" font-weight="400">上下文复用</text>
+<circle cx="1610" cy="1592" r="8" fill="#CC873C"/>
+<text x="1634" y="1602" text-anchor="start" fill="#7C8BA0" font-family="Hiragino Sans GB, Arial, sans-serif" font-size="25" font-weight="400">人工介入</text>
+</svg>

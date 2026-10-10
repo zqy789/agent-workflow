@@ -1,0 +1,47 @@
+flowchart TB
+    CREATOR["需求创造者<br/>目标、约束、最终验收"]
+    ORG["组织架构<br/>人员 · 角色 · 职责"]
+    REQUEST["项目 · 需求<br/>组织协作与汇聚成果"]
+
+    subgraph GRAPH["用户自定义协作图 · 抽象节点可增删改"]
+        direction LR
+        A["节点 A · Agent<br/>输入要求 / 产物"]
+        B["节点 B · Agent<br/>输入要求 / 产物"]
+        C["节点 C · Agent<br/>输入要求 / 产物"]
+        D["节点 D · Agent<br/>多依赖适配与交付"]
+        A -->|"依赖产物"| D
+        B -->|"依赖产物"| D
+        C -->|"依赖产物"| D
+    end
+
+    CONTEXT["共享有效上下文<br/>目标 · 已确认决策 · 产物版本 · 进度 · 未决问题<br/>来源可追溯 · 变化可识别"]
+    GLOBAL["全局 Agent<br/>协调推进 · 宏观进度 · 交付情况"]
+    NOTIFY["后台通知<br/>Web 待办 · 钉钉"]
+    HUMAN["人工介入<br/>补充信息 · 审批退回 · 验收"]
+    CAPABILITY["能力配置<br/>MCP · Agent 内核 · 节点流水线"]
+
+    CREATOR -->|"需求与约束"| REQUEST
+    REQUEST -->|"分解与委派"| GRAPH
+    ORG -.->|"角色与责任"| GRAPH
+    D -->|"事件 + 实际产物"| REQUEST
+    REQUEST -->|"最终产物"| CREATOR
+    GRAPH -->|"交付记录与变化"| CONTEXT
+    CONTEXT -.->|"复用有效上下文"| GRAPH
+    CONTEXT --> GLOBAL
+    GLOBAL -.->|"按授权协调"| GRAPH
+    GRAPH -->|"缺少关键信息 / 待审批"| NOTIFY
+    NOTIFY --> HUMAN
+    HUMAN -->|"补充或决定后继续"| GRAPH
+    HUMAN -->|"已确认结论"| CONTEXT
+    CAPABILITY -.-> GRAPH
+
+    classDef demand fill:#EAF1FF,stroke:#3569C8,color:#132A49;
+    classDef node fill:#E7F5F1,stroke:#398B77,color:#173E33;
+    classDef context fill:#F1ECFA,stroke:#8D6FAD,color:#473059;
+    classDef human fill:#FFF2E2,stroke:#CD8C45,color:#6C421D;
+    classDef support fill:#F4F5F7,stroke:#919DAA,color:#394550;
+    class CREATOR,REQUEST demand;
+    class A,B,C,D node;
+    class CONTEXT,GLOBAL context;
+    class NOTIFY,HUMAN human;
+    class ORG,CAPABILITY support;
