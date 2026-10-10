@@ -7,20 +7,43 @@
   <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
-  <main class="term" id="term">
-    <section class="output" id="output" aria-live="polite"></section>
-    <form class="input-line" id="input-line" autocomplete="off">
-      <span class="prompt" id="prompt">❯</span>
-      <input
-        id="input"
-        type="text"
-        autocomplete="off"
-        autocapitalize="off"
-        spellcheck="false"
-        aria-label="command input"
-      />
-    </form>
-  </main>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark"></span>
+        <span class="brand-name">agent-workflow</span>
+      </div>
+
+      <nav class="nav">
+        <button class="nav-item active" data-view="overview">概览</button>
+        <button class="nav-item" data-view="nodes">节点</button>
+        <button class="nav-item" data-view="connections">连接</button>
+      </nav>
+
+      <div class="side-head">项目</div>
+      <ul class="project-list" id="project-list"></ul>
+
+      <div class="side-foot" id="side-foot"></div>
+    </aside>
+
+    <main class="content">
+      <header class="topbar">
+        <h1 class="view-title" id="view-title">概览</h1>
+        <div class="actions">
+          <span class="pill" id="llm-pill"><i class="dot"></i><span id="llm-label">LLM</span></span>
+          <button class="btn primary" id="run">运行示例</button>
+        </div>
+      </header>
+      <div class="view" id="view"></div>
+    </main>
+  </div>
+
+  <div class="scrim" id="scrim"></div>
+  <aside class="drawer" id="drawer">
+    <button class="drawer-close" id="drawer-close" aria-label="关闭">×</button>
+    <div class="drawer-body" id="drawer-body"></div>
+  </aside>
+
   <script src="/app.js"></script>
 </body>
 </html>
