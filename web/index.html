@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>flowstate · 上下文流转</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <!-- 深空背景 -->
+  <div class="void"></div>
+  <div class="grid-plane"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-glyph"></span>
+      <span class="brand-word">flowstate</span>
+      <span class="brand-sub">上下文流转平台</span>
+    </div>
+    <div class="status-cluster">
+      <span class="status-pill" id="llm-pill"><i class="dot"></i><span id="llm-label">LLM</span></span>
+      <span class="status-pill" id="health-pill"><i class="dot"></i><span>在线</span></span>
+    </div>
+  </header>
+
+  <main class="stage" id="stage"></main>
+
+  <footer class="hud">
+    <div class="hud-item"><span class="hud-k">节点</span><span class="hud-v" id="stat-nodes">0</span></div>
+    <div class="hud-item"><span class="hud-k">产物</span><span class="hud-v" id="stat-artifacts">0</span></div>
+    <div class="hud-item"><span class="hud-k">事件</span><span class="hud-v" id="stat-events">0</span></div>
+    <div class="hud-item hud-hint"><span id="hint-text">等待初始化…</span></div>
+  </footer>
+
+  <button class="fab" id="run-demo" title="生成一条示例协作流">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+
+  <aside class="panel" id="panel" aria-hidden="true">
+    <button class="panel-close" id="panel-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <div class="panel-body" id="panel-body"></div>
+  </aside>
+
+  <script src="/app.js"></script>
+</body>
+</html>

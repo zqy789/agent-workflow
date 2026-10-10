@@ -1,0 +1,22 @@
+// 公共 API 出口：模型 / 扩展点 / 配置实例 / 内核
+export * from './model/index.ts';
+export * from './extensions/index.ts';
+export * from './config/index.ts';
+export { Kernel } from './engine/index.ts';
+export type { StructuralInputCheck } from './engine/index.ts';
+export { organizeContext } from './engine/context.ts';
+export { PipelineRunner } from './engine/pipeline.ts';
+export type { PipelineRunResult } from './engine/pipeline.ts';
+export { consoleNotifier } from './extensions/builtin/console-notifier.ts';
+export { TodoNotifier } from './extensions/builtin/todo-notifier.ts';
+export type { TodoRecord } from './extensions/builtin/todo-notifier.ts';
+export { httpToolProvider } from './extensions/builtin/http-tool.ts';
+export { DeepSeekAgentKernel, parseAnalysis, buildAnalysisPrompt } from './extensions/builtin/deepseek-agent.ts';
+export type { DeepSeekAgentOptions } from './extensions/builtin/deepseek-agent.ts';
+export { McpToolProvider } from './extensions/builtin/mcp-tool.ts';
+export type { McpToolProviderOptions } from './extensions/builtin/mcp-tool.ts';
+export { DingTalkNotifier } from './extensions/builtin/dingtalk-notifier.ts';
+export type { DingTalkNotifierOptions } from './extensions/builtin/dingtalk-notifier.ts';
+export { InMemoryIdentityProvider, OrgIsolationPermissionEvaluator } from './extensions/builtin/permission.ts';
+export { loadLlmConfig } from './config/llm.ts';
+export type { LlmConfig } from './config/llm.ts';

@@ -1,0 +1,15 @@
+{
+  "name": "agent-workflow-platform",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "研发协作与上下文流转平台 —— 可配置框架（极简内核 + 一切皆配置 + 稳定扩展点）",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "demo": "node examples/basic-flow.ts",
+    "test": "node tests/kernel-rules.test.ts && node tests/pipeline-notify.test.ts && node tests/server.test.ts && node tests/tool.test.ts && node tests/integrations.test.ts && node tests/permission-summary.test.ts",
+    "server": "node server.ts"
+  }
+}
