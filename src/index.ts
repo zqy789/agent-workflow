@@ -1,22 +1,20 @@
-// 公共 API 出口：模型 / 扩展点 / 配置实例 / 内核
-export * from './model/index.ts';
-export * from './extensions/index.ts';
-export * from './config/index.ts';
-export { Kernel } from './engine/index.ts';
-export type { StructuralInputCheck } from './engine/index.ts';
-export { organizeContext } from './engine/context.ts';
-export { PipelineRunner } from './engine/pipeline.ts';
-export type { PipelineRunResult } from './engine/pipeline.ts';
-export { consoleNotifier } from './extensions/builtin/console-notifier.ts';
-export { TodoNotifier } from './extensions/builtin/todo-notifier.ts';
-export type { TodoRecord } from './extensions/builtin/todo-notifier.ts';
-export { httpToolProvider } from './extensions/builtin/http-tool.ts';
-export { DeepSeekAgentKernel, parseAnalysis, buildAnalysisPrompt } from './extensions/builtin/deepseek-agent.ts';
-export type { DeepSeekAgentOptions } from './extensions/builtin/deepseek-agent.ts';
-export { McpToolProvider } from './extensions/builtin/mcp-tool.ts';
-export type { McpToolProviderOptions } from './extensions/builtin/mcp-tool.ts';
-export { DingTalkNotifier } from './extensions/builtin/dingtalk-notifier.ts';
-export type { DingTalkNotifierOptions } from './extensions/builtin/dingtalk-notifier.ts';
-export { InMemoryIdentityProvider, OrgIsolationPermissionEvaluator } from './extensions/builtin/permission.ts';
-export { loadLlmConfig } from './config/llm.ts';
-export type { LlmConfig } from './config/llm.ts';
+// ============================================================================
+// 公共 API 出口（组合根）：领域模型 / 应用服务 / 基础设施
+// ============================================================================
+
+export * from './domain/index.ts';
+export * from './application/index.ts';
+export { SequentialIdGenerator } from './infrastructure/id-generator.ts';
+export { FileLedgerStore } from './infrastructure/file-ledger-store.ts';
+export type { FileLedgerStoreOptions } from './infrastructure/file-ledger-store.ts';
+export { DemoAgentKernel } from './infrastructure/agents/demo-agent.ts';
+export { DeepSeekAgentKernel, buildAgentPrompt, parseAgentResult } from './infrastructure/agents/deepseek-agent.ts';
+export type { DeepSeekAgentOptions } from './infrastructure/agents/deepseek-agent.ts';
+export { SkillLoader } from './infrastructure/skill-loader.ts';
+export { TodoNotifier } from './infrastructure/notifiers/todo-notifier.ts';
+export type { TodoRecord } from './infrastructure/notifiers/todo-notifier.ts';
+export { DingTalkNotifier } from './infrastructure/notifiers/dingtalk-notifier.ts';
+export type { DingTalkNotifierOptions } from './infrastructure/notifiers/dingtalk-notifier.ts';
+export { ForestStoreFile } from './infrastructure/forest-store.ts';
+export { createApp } from './interfaces/http/app.ts';
+export type { AppWorld, TreeWorld } from './interfaces/http/app.ts';

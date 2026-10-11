@@ -3,47 +3,86 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>agent-workflow</title>
+  <title>agent-workflow · 梧桐林</title>
   <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
   <div class="app">
-    <aside class="sidebar">
-      <div class="brand">
-        <span class="brand-mark"></span>
-        <span class="brand-name">agent-workflow</span>
-      </div>
-
-      <nav class="nav">
-        <button class="nav-item active" data-view="overview">概览</button>
-        <button class="nav-item" data-view="nodes">节点</button>
-        <button class="nav-item" data-view="connections">连接</button>
-      </nav>
-
-      <div class="side-head">项目</div>
-      <ul class="project-list" id="project-list"></ul>
-
-      <div class="side-foot" id="side-foot"></div>
-    </aside>
-
-    <main class="content">
-      <header class="topbar">
-        <h1 class="view-title" id="view-title">概览</h1>
-        <div class="actions">
-          <span class="pill" id="llm-pill"><i class="dot"></i><span id="llm-label">LLM</span></span>
-          <button class="btn primary" id="run">运行示例</button>
+    <div class="app-body">
+      <!-- ============ 左栏：梧桐林 ============ -->
+      <aside class="sidebar">
+        <div class="brand">
+          <span class="brand-mark"></span>
+          <span class="brand-name">agent-workflow</span>
+          <span class="brand-ver">v0.2</span>
         </div>
-      </header>
-      <div class="view" id="view"></div>
-    </main>
+
+        <div class="side-section">
+          <div class="side-head">梧桐林 · 我的树</div>
+          <ul class="nav-tree">
+            <li class="nav-item current">
+              <span class="nd nd-amber"></span><span class="nav-name">甲组织</span>
+              <span class="nav-tag">当前</span>
+            </li>
+            <li class="nav-item">
+              <span class="nd nd-green"></span><span class="nav-name">能力库</span>
+            </li>
+            <li class="nav-item add-tree"><span class="nav-name">＋ 栽一棵新树</span></li>
+          </ul>
+        </div>
+
+        <div class="side-section">
+          <div class="side-head">连接</div>
+          <div class="conn-row"><span class="conn-k">Agent</span><span class="conn-v on">deepseek</span></div>
+          <div class="conn-row"><span class="conn-k">通知</span><span class="conn-v on">待办</span></div>
+        </div>
+
+        <div class="side-foot">
+          <span class="foot-agent">全局 Agent · 观察中</span>
+          <span class="foot-hash">链 128 · 校验 ✓</span>
+        </div>
+      </aside>
+
+      <!-- ============ 主区 ============ -->
+      <main class="main">
+        <header class="topbar">
+          <div class="crumbs">
+            <span class="crumb now">甲组织 · 梧桐树</span>
+            <span class="crumb-tag dim">栽下梧桐树，引得凤凰来</span>
+          </div>
+          <div class="tb-right">
+            <button class="btn ghost">全局 Agent <em class="tb-badge">1</em></button>
+            <button class="btn primary">进入节点房间 →</button>
+          </div>
+        </header>
+
+        <!-- 梧桐树舞台：树形由组织结构生成（render-tree.py） -->
+        <div class="tree-stage">
+          <img class="tree-img" src="/tree-a.svg" alt="甲组织梧桐树（由组织结构生成）" />
+
+          <!-- 右侧读数面板 -->
+          <div class="stage-panel">
+            <div class="sp-grid">
+              <div class="sp-cell"><label>等待</label><b>2</b></div>
+              <div class="sp-cell"><label>运行</label><b>2</b></div>
+              <div class="sp-cell"><label>完成</label><b>1</b></div>
+              <div class="sp-cell warn"><label>提醒</label><b>1</b></div>
+            </div>
+            <div class="feed">
+              <div class="feed-head">最新碎片</div>
+              <div class="feed-row"><span class="f-kind k-give">give_input</span><span class="f-path">我 → 组长</span><span class="f-time">12:51</span></div>
+              <div class="feed-row"><span class="f-kind k-submit">submit</span><span class="f-path">木工 → 组长</span><span class="f-time">12:50</span></div>
+              <div class="feed-row"><span class="f-kind k-alarm">timeout</span><span class="f-path">Agent → 我</span><span class="f-time">12:05</span></div>
+            </div>
+            <div class="sp-actions">
+              <button class="btn tiny">进入节点房间 →</button>
+            </div>
+          </div>
+
+          <div class="stage-note">树形由组织结构生成 · 每个项目一棵独一无二的梧桐 · 结构不同，树也不同</div>
+        </div>
+      </main>
+    </div>
   </div>
-
-  <div class="scrim" id="scrim"></div>
-  <aside class="drawer" id="drawer">
-    <button class="drawer-close" id="drawer-close" aria-label="关闭">×</button>
-    <div class="drawer-body" id="drawer-body"></div>
-  </aside>
-
-  <script src="/app.js"></script>
 </body>
 </html>

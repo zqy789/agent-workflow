@@ -1,15 +1,15 @@
 {
   "name": "agent-workflow-platform",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
-  "description": "研发协作与上下文流转平台 —— 可配置框架（极简内核 + 一切皆配置 + 稳定扩展点）",
+  "description": "Agent WorkFlow v0.2 —— 树 · 流 · 账本（一切皆节点；相邻才交易；流即 IO；I 可变 O 不变；碎片成链；全局 Agent 观察、根节点决策）",
   "engines": {
     "node": ">=24"
   },
   "scripts": {
-    "demo": "node examples/basic-flow.ts",
-    "test": "node tests/kernel-rules.test.ts && node tests/pipeline-notify.test.ts && node tests/server.test.ts && node tests/tool.test.ts && node tests/integrations.test.ts && node tests/permission-summary.test.ts",
+    "test": "node tests/tree-kernel.test.ts && node tests/flow.test.ts && node tests/ledger.test.ts && node tests/global-agent.test.ts && node tests/capability.test.ts && node tests/acceptance.test.ts && node tests/integrations.test.ts && node tests/server.test.ts && node examples/full-chain.ts",
+    "demo": "node examples/full-chain.ts",
     "server": "node server.ts"
   }
 }

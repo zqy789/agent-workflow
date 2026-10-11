@@ -1,0 +1,165 @@
+classDiagram
+direction TB
+
+class NodeId {
+  +string value
+  +of(value)$ NodeId
+  +equals(other) boolean
+}
+
+class Node {
+  +NodeId id
+  +string name
+  +NodeId ownerId
+  +boolean isSelf
+  -Node parent
+  -children Map
+  -Visibility visibility
+  -NodeStatus status
+  +attachChild(child)
+  +removeChild(child)
+  +isAdjacentTo(other) boolean
+  +isAncestorOf(candidate) boolean
+  +collectSubtree() Node[]
+  +transition(to)
+  +changeVisibility(v, actor)
+}
+
+class Tree {
+  +Node root
+  -nodes Map
+  -idGen IdGenerator
+  +isAdjacent(a, b) boolean
+  +isAncestorOf(candidate, nodeId) boolean
+  +createChild(parentId, def) Node
+  +join(parentId, subtreeRoot)
+  +prune(nodeId)
+  +transition(nodeId, to)
+  +changeVisibility(nodeId, v, actor)
+}
+
+class Forest {
+  -trees Map
+  +plant(tree)
+  +remove(rootId)
+  +treeOf(nodeId) Tree
+}
+
+class Product {
+  +NodeId producerId
+  +number version
+  +content
+  +nextVersion(content) Product
+}
+
+class MessageFragment {
+  +NodeId id
+  +Hash prevHash
+  +NodeId fromId
+  +NodeId toId
+  +FragmentKind kind
+  +number timestamp
+}
+
+class Verdict {
+  +NodeId nodeId
+  +number productVersion
+  +VerdictKind kind
+  +string reason
+}
+
+class Ledger {
+  +append(fragment)
+  +verify() boolean
+  +replay(from) MessageFragment[]
+}
+
+class FlowService {
+  +giveInput(parent, child, input)
+  +submitProduct(node, product)
+  +isJoinSatisfied(node) boolean
+}
+
+class AcceptanceService {
+  +accept(node, product)
+  +returnProduct(node, product, reason)
+}
+
+class RootController {
+  +listen(fragment)
+  +rewriteToNewInput(fragment, input)
+  +letStop(fragment)
+  +pruneBranch(nodeId)
+}
+
+class GlobalAgent {
+  +onFragmentAppended(fragment)
+  +timeStats()
+  +alarms()
+}
+
+class IdGenerator {
+  <<interface>>
+  +next(prefix) NodeId
+}
+
+class TreeStore {
+  <<interface>>
+  +load() TreeSnapshot
+  +save(snapshot)
+}
+
+class LedgerStore {
+  <<interface>>
+  +append(fragment)
+  +tail() Hash
+  +replay(from) MessageFragment[]
+}
+
+class AgentKernel {
+  <<interface>>
+  +act(ctx) AgentResult
+}
+
+class ActionExecutor {
+  <<interface>>
+  +execute(action, ctx) ActionResult
+}
+
+class NotifierChannel {
+  <<interface>>
+  +send(notice) SendResult
+}
+
+class AlarmPolicy {
+  <<interface>>
+  +evaluate(stats, ctx) Alarm[]
+}
+
+class SequentialIdGenerator {
+  +next(prefix) NodeId
+}
+
+class FileTreeStore
+class FileLedgerStore
+
+Tree *-- Node : root
+Tree o-- Node : 子树
+Forest o-- Tree
+Node --> NodeId
+Node --> Product : 产出
+Ledger *-- MessageFragment : 只追加
+Tree ..> IdGenerator
+FlowService --> Tree
+FlowService --> Product
+AcceptanceService --> Tree
+AcceptanceService --> Verdict
+RootController --> Tree
+RootController --> MessageFragment
+GlobalAgent ..> Ledger : 订阅（Observer）
+GlobalAgent --> AlarmPolicy
+SequentialIdGenerator ..|> IdGenerator
+FileTreeStore ..|> TreeStore
+FileLedgerStore ..|> LedgerStore
+Tree ..> TreeStore : 快照
+Ledger ..> LedgerStore : 追加日志

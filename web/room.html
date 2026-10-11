@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>agent-workflow · 节点终端</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="app">
+    <div class="app-body">
+      <!-- ============ 左栏：树导航 ============ -->
+      <aside class="sidebar">
+        <div class="brand">
+          <span class="brand-mark"></span>
+          <span class="brand-name">agent-workflow</span>
+          <span class="brand-ver">v0.2</span>
+        </div>
+
+        <div class="side-section">
+          <div class="side-head">我的树</div>
+          <ul class="nav-tree">
+            <li class="nav-item tree-open"><span class="nav-caret">▾</span><span class="nav-name">甲组织</span></li>
+            <li class="nav-item current">
+              <span class="nav-spacer"></span><span class="nd nd-amber"></span><span class="nav-name">我（自己）</span>
+              <span class="nav-tag">当前</span>
+            </li>
+            <li class="nav-item">
+              <span class="nav-spacer"></span><span class="nav-caret">▾</span><span class="nd nd-amber"></span><span class="nav-name">组长</span>
+              <span class="nav-count">2</span>
+            </li>
+            <li class="nav-item indent2"><span class="nd nd-cyan pulse"></span><span class="nav-name">木工</span></li>
+            <li class="nav-item indent2"><span class="nd nd-green"></span><span class="nav-name">油漆工</span></li>
+            <li class="nav-item tree-open"><span class="nav-caret">▸</span><span class="nav-name">能力库</span></li>
+          </ul>
+        </div>
+
+        <div class="side-section">
+          <div class="side-head">连接</div>
+          <div class="conn-row"><span class="conn-k">Agent</span><span class="conn-v on">deepseek</span></div>
+          <div class="conn-row"><span class="conn-k">通知</span><span class="conn-v on">待办</span></div>
+        </div>
+
+        <div class="side-foot">
+          <span class="foot-agent">全局 Agent · 观察中</span>
+          <span class="foot-hash">链 128 · 校验 ✓</span>
+        </div>
+      </aside>
+
+      <!-- ============ 主区 ============ -->
+      <main class="main">
+        <!-- 行情条：全树实时读数 -->
+        <div class="ticker">
+          <span class="tk-item"><i>链</i><b>128</b><em>✓</em></span>
+          <span class="tk-sep"></span>
+          <span class="tk-item"><i>等待</i><b>2</b></span>
+          <span class="tk-sep"></span>
+          <span class="tk-item"><i>运行</i><b>1</b></span>
+          <span class="tk-sep"></span>
+          <span class="tk-item warn"><i>提醒</i><b>1</b></span>
+          <span class="tk-sep"></span>
+          <span class="tk-item"><i>碎片</i><b>0.3/s</b></span>
+          <span class="tk-sep"></span>
+          <span class="tk-goal">目标 木头 → 椅子 · 验收 能坐 / 稳</span>
+          <span class="tk-right"><span class="gdot on"></span>全局 Agent 在线</span>
+        </div>
+
+        <!-- 面包屑条 -->
+        <header class="topbar">
+          <div class="crumbs">
+            <span class="crumb">甲组织</span><span class="crumb-sep">›</span>
+            <span class="crumb now">我（自己）</span>
+            <span class="crumb-tag">根节点</span>
+            <span class="crumb-tag dim">owner 我 · 唯一决策位</span>
+          </div>
+          <div class="tb-right">
+            <button class="btn ghost"><a href="/" style="color:inherit;text-decoration:none">← 梧桐树</a></button>
+            <button class="btn ghost">全局 Agent <em class="tb-badge">1</em></button>
+            <button class="btn primary">运行示例</button>
+          </div>
+        </header>
+
+        <!-- 房间：数据终端 -->
+        <div class="room">
+          <!-- 仪表行：大数字读数 -->
+          <div class="gauges">
+            <div class="gauge"><label>状态</label><span class="g-val amber">等待</span></div>
+            <div class="gauge"><label>已等待</label><span class="g-val">—</span></div>
+            <div class="gauge"><label>产物</label><span class="g-val">v3</span></div>
+            <div class="gauge"><label>下级</label><span class="g-val">2</span></div>
+            <div class="gauge"><label>待办</label><span class="g-val warn">2</span></div>
+            <div class="gauge wide"><label>节点</label><span class="g-val small">我（自己）· 唯一决策位</span></div>
+          </div>
+
+          <!-- 回流产物 · 待验收（终端表格） -->
+          <section class="panel">
+            <div class="panel-head">
+              <h2>回流产物 · 待验收</h2>
+              <span class="panel-hint">下级节点的最新产物 · 自下而上 · O 不可篡改</span>
+              <button class="btn tiny">+ 提交产物</button>
+            </div>
+            <table class="dtable">
+              <thead><tr><th>节点</th><th>版本</th><th>内容</th><th>提交</th><th>结论</th><th class="r">操作</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><span class="nd nd-amber"></span>组长</td>
+                  <td class="mono">v2</td><td>组装件 · 待椅面</td><td class="mono">12:48:19</td>
+                  <td><span class="tag wait">待验收</span></td>
+                  <td class="r"><button class="btn tiny">通过</button><button class="btn tiny danger">打回</button><button class="btn tiny ghost">进入 →</button></td>
+                </tr>
+                <tr>
+                  <td><span class="nd nd-green"></span>油漆工</td>
+                  <td class="mono">v2</td><td>上光完成</td><td class="mono">12:50:41</td>
+                  <td><span class="tag pass">已通过</span></td>
+                  <td class="r">—</td>
+                </tr>
+                <tr>
+                  <td><span class="nd nd-cyan pulse"></span>木工</td>
+                  <td class="mono">v1</td><td>椅体毛坯</td><td class="mono">12:51:03</td>
+                  <td><span class="tag run">运行中</span></td>
+                  <td class="r"><button class="btn tiny ghost">进入 →</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- 能力 · actions（工具表） -->
+          <section class="panel">
+            <div class="panel-head">
+              <h2>能力 · actions</h2>
+              <span class="panel-hint">本节点能做什么 · 一切皆节点，能力即扩展</span>
+              <button class="btn tiny">+ 添加能力</button>
+            </div>
+            <table class="dtable">
+              <thead><tr><th>名称</th><th>类型</th><th>配置</th><th>状态</th><th class="r">操作</th></tr></thead>
+              <tbody>
+                <tr><td>Agent 内核</td><td class="mono">agent</td><td class="mono">deepseek · deepseek-chat</td><td><span class="tag on">已配置</span></td><td class="r"><button class="btn tiny ghost">卸载</button></td></tr>
+                <tr><td>SKILL</td><td class="mono">skill</td><td class="mono">木工工艺.md</td><td><span class="tag on">组合</span></td><td class="r"><button class="btn tiny ghost">卸载</button></td></tr>
+                <tr><td>代码检查</td><td class="mono">ci-cd</td><td class="mono">提交 → review → 检查</td><td><span class="tag on">已挂载</span></td><td class="r"><button class="btn tiny ghost">卸载</button></td></tr>
+                <tr><td>打包发布</td><td class="mono">ci-cd</td><td class="mono">打包 → 二维码</td><td><span class="tag off">未挂载</span></td><td class="r"><button class="btn tiny">挂载</button></td></tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- 产物 · 版本链 -->
+          <section class="panel">
+            <div class="panel-head">
+              <h2>产物 · 版本链</h2>
+              <span class="panel-hint">O 追加式 · 旧版本留链 · 修改 = 新版本</span>
+            </div>
+            <table class="dtable">
+              <thead><tr><th>版本</th><th>内容</th><th>时间</th><th>最终验收</th></tr></thead>
+              <tbody>
+                <tr><td class="mono b">v3</td><td>最终成果：椅子</td><td class="mono">12:51:03</td><td><span class="tag pass">已接受</span></td></tr>
+                <tr><td class="mono">v2</td><td>加扶手修订</td><td class="mono">12:33:12</td><td><span class="tag return">已打回</span></td></tr>
+                <tr><td class="mono">v1</td><td>初版</td><td class="mono">12:01:02</td><td><span class="tag return">已打回</span></td></tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- 相邻消息 -->
+          <section class="panel">
+            <div class="panel-head">
+              <h2>相邻消息</h2>
+              <span class="panel-hint">与本节点相邻的交易 · 全量在全局单链账本</span>
+            </div>
+            <div class="feed">
+              <div class="feed-row"><span class="f-kind k-give">give_input</span><span class="f-path">我 → 组长</span><span class="f-time">12:51:03</span></div>
+              <div class="feed-row"><span class="f-kind k-pass">pass</span><span class="f-path">组长 → 油漆工</span><span class="f-time">12:48:19</span></div>
+              <div class="feed-row"><span class="f-kind k-alarm">timeout_alarm</span><span class="f-path">全局 Agent → 我</span><span class="f-actions"><button class="btn tiny ghost">改写</button><button class="btn tiny ghost">止步</button></span><span class="f-time">12:05:59</span></div>
+            </div>
+          </section>
+        </div>
+
+        <!-- 全局 Agent 监控条 -->
+        <div class="global-panel">
+          <div class="gp-tabs">
+            <span class="gp-tab">时间统计</span>
+            <span class="gp-tab active">提醒 <em>1</em></span>
+            <span class="gp-tab">碎片</span>
+            <span class="gp-right">全局 Agent · 只观察 · 不干预</span>
+          </div>
+          <div class="gp-body">
+            <div class="gp-stats">
+              <table class="dtable slim">
+                <thead><tr><th>节点</th><th>状态</th><th class="r">已等待</th></tr></thead>
+                <tbody>
+                  <tr><td>组长</td><td class="wait">等待</td><td class="mono r">12:04</td></tr>
+                  <tr><td>木工</td><td class="run">运行</td><td class="mono r">—</td></tr>
+                  <tr><td>油漆工</td><td class="pass">完成</td><td class="mono r">—</td></tr>
+                  <tr><td>大工</td><td class="wait">等待</td><td class="mono r warn">57:12</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="alarm-card">
+              <div class="alarm-head">
+                <span class="alarm-title">大工 · 等待超时</span>
+                <span class="alarm-time">已 3,421s · 等小工回流</span>
+                <span class="alarm-tag">已入账 · 已通知根节点 · 待办已记录</span>
+              </div>
+              <div class="alarm-actions">
+                <button class="btn tiny danger">剪枝</button>
+                <button class="btn tiny">注入新 I</button>
+                <button class="btn tiny">转人工</button>
+              </div>
+            </div>
+            <div class="feed gp-feed">
+              <div class="feed-head">碎片 · 全局单链账本</div>
+              <div class="feed-row"><span class="f-kind k-give">give_input</span><span class="f-path">我 → 组长</span><span class="f-time">12:51:03</span></div>
+              <div class="feed-row"><span class="f-kind k-submit">submit_product</span><span class="f-path">木工 → 组长</span><span class="f-time">12:50:41</span></div>
+              <div class="feed-row"><span class="f-kind k-pass">pass</span><span class="f-path">组长 → 油漆工</span><span class="f-time">12:48:19</span></div>
+              <div class="feed-row"><span class="f-kind k-return">return</span><span class="f-path">组长 → 油漆工</span><span class="f-time">12:24:17</span></div>
+              <div class="feed-row"><span class="f-kind k-alarm">timeout_alarm</span><span class="f-path">全局 Agent → 我</span><span class="f-time">12:05:59</span></div>
+              <div class="feed-row"><span class="f-kind k-new">new_input</span><span class="f-path">我 → 组长</span><span class="f-time">12:01:02</span></div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

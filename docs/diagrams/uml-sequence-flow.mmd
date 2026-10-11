@@ -1,0 +1,18 @@
+sequenceDiagram
+  autonumber
+  participant R as 根 · 根节点
+  participant A as 节点 A
+  participant A1 as 节点 A1
+  participant L as 账本
+  participant G as 全局 Agent
+
+  Note over R,G: 目标由根提出（木头→椅子）；每次相邻交易 = 消息碎片入链
+  R->>A: I 输入（可改写）
+  A->>A1: I（每级可加工改写）
+  A1->>A: O 产物 v1（不可篡改）
+  A->>A1: 打回（结论绑定 v1）
+  A1->>A: O 产物 v2（修订 = 新版本，旧结论留链）
+  A->>R: O 产物 v2 · 通过
+  R->>L: 碎片入账（prevHash）
+  G-->>R: 示警 / 时间统计反馈（只反馈不干预）
+  R->>A: 新 I（根主动改写，向下流转）

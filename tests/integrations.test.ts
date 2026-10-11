@@ -1,103 +1,156 @@
 // ============================================================================
-// FR08 钉钉 + FR09 MCP 接入测试 —— `node tests/integrations.test.ts`
-// 用本地 mock（MCP 服务器 / 钉钉 webhook）验证真实协议与发送格式。
+// 连接与集成测试 —— `node tests/integrations.test.ts`
+// 覆盖：DeepSeek 内核（真实请求 → 解析产出 / 未配置降级 / 宽松解析）·
+//       钉钉渠道（送达成功/失败可见）· createApp 按 env 装配 + /integrations
 // ============================================================================
 
-import { createServer, type Server } from 'node:http';
-import { McpToolProvider } from '../src/extensions/builtin/mcp-tool.ts';
-import { DingTalkNotifier } from '../src/extensions/builtin/dingtalk-notifier.ts';
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { mkdtempSync, rmSync } from 'node:fs';
+import { join } from 'node:path';
+import { tmpdir } from 'node:os';
+import type { Server } from 'node:http';
+import { createServer } from 'node:http';
+import { DeepSeekAgentKernel, buildAgentPrompt, parseAgentResult } from '../src/infrastructure/agents/deepseek-agent.ts';
+import { DingTalkNotifier } from '../src/infrastructure/notifiers/dingtalk-notifier.ts';
+import { NodeId } from '../src/domain/values.ts';
+import type { AgentContext } from '../src/domain/ports.ts';
+import { createApp } from '../src/interfaces/http/app.ts';
 
-let passed = 0;
-let failed = 0;
-function ok(cond: boolean, msg: string) {
-  if (cond) { passed += 1; console.log('  \u2713 ' + msg); }
-  else { failed += 1; console.error('  \u2717 ' + msg); }
-}
-
-function listen(server: Server): Promise<string> {
+function mockServer(handler: (req: { url?: string; method?: string; headers: Record<string, string | string[] | undefined>; body: string }) => { status: number; body: string }): Promise<{ base: string; server: Server; requests: { body: string }[] }> {
+  const requests: { body: string }[] = [];
+  const server = createServer((req, res) => {
+    let raw = '';
+    req.on('data', (c) => { raw += c; });
+    req.on('end', () => {
+      requests.push({ body: raw });
+      const out = handler({ url: req.url, method: req.method, headers: req.headers, body: raw });
+      res.writeHead(out.status, { 'Content-Type': 'application/json' });
+      res.end(out.body);
+    });
+  });
   return new Promise((resolve) => {
     server.listen(0, '127.0.0.1', () => {
       const addr = server.address();
-      resolve(`http://127.0.0.1:${typeof addr === 'object' && addr ? addr.port : 0}`);
+      const port = typeof addr === 'object' && addr ? addr.port : 0;
+      resolve({ base: `http://127.0.0.1:${port}`, server, requests });
     });
   });
 }
 
-async function readJson(req: import('node:http').IncomingMessage): Promise<any> {
-  let raw = '';
-  for await (const c of req) raw += c;
-  return raw ? JSON.parse(raw) : {};
+const closeServer = (s: Server) => new Promise<void>((r) => s.close(() => r()));
+
+function ctx(): AgentContext {
+  return {
+    nodeId: NodeId.of('node-x'),
+    nodeName: '设计节点',
+    goalAndScope: ['交付一把椅子', '负责外观设计'],
+    inputs: [{ content: '木头', givenBy: NodeId.of('root'), tick: 1 }],
+    branchProducts: [],
+    skills: [],
+  };
 }
 
-async function main() {
-  // ---- mock MCP 服务器 ----
-  let toolCalls: any[] = [];
-  const mcp = createServer(async (req, res) => {
-    const msg = await readJson(req);
-    let result: unknown = {};
-    if (msg.method === 'initialize') {
-      result = { protocolVersion: '2025-03-26', capabilities: { tools: {} }, serverInfo: { name: 'mock-mcp', version: '0' } };
-    } else if (msg.method === 'tools/list') {
-      result = { tools: [{ name: 'echo', description: '回显工具', inputSchema: { type: 'object' } }] };
-    } else if (msg.method === 'tools/call') {
-      toolCalls.push(msg.params);
-      result = { content: [{ type: 'text', text: 'ECHO:' + JSON.stringify(msg.params.arguments) }], isError: false };
-    } else if (msg.method === 'resources/read') {
-      result = { contents: [{ uri: msg.params.uri, text: 'RESOURCE-CONTENT' }] };
-    }
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ jsonrpc: '2.0', id: msg.id, result }));
+// ------------------------------------------------------------------ DeepSeek
+test('DeepSeek 内核：请求 → 解析 JSON 产出（OpenAI 兼容）', async () => {
+  const mock = await mockServer(({ method, headers, body }) => {
+    assert.equal(method, 'POST');
+    assert.equal(headers.authorization, 'Bearer sk-test');
+    assert.match(body, /deepseek-chat/);
+    return {
+      status: 200,
+      body: JSON.stringify({ choices: [{ message: { content: '{"output":"椅子设计稿","notes":["颜色待定"]}' } }] }),
+    };
   });
-  const mcpBase = await listen(mcp);
 
-  // ---- mock 钉钉 webhook ----
-  let dingtalkPayload: any = null;
-  const ding = createServer(async (req, res) => {
-    dingtalkPayload = await readJson(req);
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ errcode: 0, errmsg: 'ok' }));
+  const kernel = new DeepSeekAgentKernel({ apiKey: 'sk-test', baseUrl: mock.base, model: 'deepseek-chat' });
+  const result = await kernel.act(ctx());
+  assert.equal(result.output, '椅子设计稿');
+  assert.deepEqual(result.notes, ['颜色待定']);
+  await closeServer(mock.server);
+});
+
+test('DeepSeek 未配置：明确降级、不伪造结果、不发请求', async () => {
+  let called = false;
+  const mock = await mockServer(() => { called = true; return { status: 200, body: '{}' }; });
+  const kernel = new DeepSeekAgentKernel({ apiKey: '', baseUrl: mock.base });
+  const result = await kernel.act(ctx());
+  assert.match(String(result.output), /未配置/);
+  assert.equal(called, false);
+  await closeServer(mock.server);
+});
+
+test('宽松解析：代码围栏 / 多余文本兜底', () => {
+  assert.deepEqual(parseAgentResult('```json\n{"output":"A"}\n```'), { output: 'A', notes: undefined });
+  const withNoise = parseAgentResult('好的，结果如下：{"output":"B","notes":["n"]} 以上');
+  assert.equal(withNoise.output, 'B');
+  const broken = parseAgentResult('不是 JSON 的纯文本');
+  assert.equal(broken.output, '不是 JSON 的纯文本');
+});
+
+test('提示词包含目标 / 输入 / 分支产物 / SKILL 事实', () => {
+  const c: AgentContext = {
+    nodeId: NodeId.of('n'),
+    nodeName: 'N',
+    goalAndScope: ['木头 → 椅子'],
+    inputs: [{ content: '板材', givenBy: NodeId.of('p'), tick: 1 }],
+    branchProducts: [{ id: NodeId.of('p1'), producerId: NodeId.of('c'), version: 2, content: '椅腿', createdAt: 'x', tick: 1 }],
+    skills: [{ id: 'wood', content: '# 木工\n榫卯' }],
+  };
+  const prompt = buildAgentPrompt(c);
+  assert.match(prompt, /木头 → 椅子/);
+  assert.match(prompt, /板材/);
+  assert.match(prompt, /v2: "椅腿"/);
+  assert.match(prompt, /榫卯/);
+});
+
+// ------------------------------------------------------------------ 钉钉
+test('钉钉渠道：errcode 0 = 送达成功；非 0 = 失败可见', async () => {
+  const okMock = await mockServer(({ body }) => {
+    assert.match(body, /msgtype/);
+    assert.match(body, /markdown/);
+    return { status: 200, body: JSON.stringify({ errcode: 0, errmsg: 'ok' }) };
   });
-  const dingBase = await listen(ding);
+  const ding = new DingTalkNotifier({ webhook: okMock.base + '/robot' });
+  const sent = await ding.send({ to: '木工', title: '需要审批', body: '请确认产物' });
+  assert.equal(sent.ok, true);
+  await closeServer(okMock.server);
 
-  console.log('== FR09 MCP 客户端 ==');
-  const mcpProvider = new McpToolProvider({ endpoint: mcpBase });
-  ok(mcpProvider.configured === true, '配置 endpoint 后 configured=true');
+  const failMock = await mockServer(() => ({ status: 200, body: JSON.stringify({ errcode: 310000, errmsg: '关键词不匹配' }) }));
+  const ding2 = new DingTalkNotifier({ webhook: failMock.base + '/robot' });
+  const failed = await ding2.send({ to: '木工', title: 'x', body: 'y' });
+  assert.equal(failed.ok, false);
+  assert.match(failed.error ?? '', /310000/);
+  await closeServer(failMock.server);
+});
 
-  const tools = await mcpProvider.listTools();
-  ok(tools.some((t) => t.id === 'echo'), 'listTools 通过 MCP 协议拿到 echo 工具');
-  ok(toolCalls.length === 0, '初始化阶段未误调工具');
+test('钉钉未配置：明确失败', async () => {
+  const ding = new DingTalkNotifier({ webhook: '' });
+  const r = await ding.send({ to: 'x', title: 't', body: 'b' });
+  assert.equal(r.ok, false);
+  assert.match(r.error ?? '', /未配置/);
+});
 
-  const callRes = await mcpProvider.call('echo', { msg: 'hi' });
-  ok(callRes.ok === true, 'tools/call 调用成功');
-  const content = (callRes.output as { content?: { text?: string }[] })?.content?.[0]?.text ?? '';
-  ok(content.includes('ECHO:') && content.includes('hi'), '工具参数经 MCP 协议正确传递');
-
-  const mat = await mcpProvider.readMaterial('resource://x');
-  ok(mat.content.includes('RESOURCE-CONTENT'), 'resources/read 读取材料');
-
-  const noEndpoint = new McpToolProvider({ endpoint: '' });
-  ok((await noEndpoint.call('echo', {})).ok === false, '未配置 endpoint 时工具调用明确失败');
-
-  console.log('== FR08 钉钉通知 ==');
-  const dingtalk = new DingTalkNotifier({ webhook: dingBase + '/robot/send' });
-  ok(dingtalk.configured === true, '配置 webhook 后 configured=true');
-  const sendRes = await dingtalk.send({ to: '节点责任人', channel: 'dingtalk', title: '需要审批', body: '请确认产物', actionUrl: 'http://x/item' });
-  ok(sendRes.ok === true, '钉钉发送成功');
-  ok(dingtalkPayload?.msgtype === 'markdown', '发送格式为 markdown 消息');
-  ok(String(dingtalkPayload?.markdown?.text).includes('请确认产物'), '消息内容正确');
-  ok(String(dingtalkPayload?.markdown?.text).includes('http://x/item'), '带处理入口链接');
-
-  const noWebhook = new DingTalkNotifier({ webhook: '' });
-  ok((await noWebhook.send({ to: 'x', channel: 'dingtalk', title: 't', body: 'b' })).ok === false, '未配置 webhook 时明确失败');
-
-  await new Promise((r) => mcp.close(() => r()));
-  await new Promise((r) => ding.close(() => r()));
-
-  console.log(`\n结果：${passed} 通过 / ${failed} 失败`);
-  if (failed > 0) process.exit(1);
-}
-
-main().catch((e) => {
-  console.error(e);
-  process.exit(1);
+// ------------------------------------------------------------------ 组合根
+test('createApp 按 env 装配：/integrations 反映配置状态', async () => {
+  const dir = mkdtempSync(join(tmpdir(), 'agent-workflow-int-'));
+  try {
+    const { server } = createApp({ dataDir: dir, env: { DEEPSEEK_API_KEY: 'sk-x', DINGTALK_WEBHOOK: 'https://example.com/hook' } });
+    const base = await new Promise<string>((resolve) => {
+      server.listen(0, '127.0.0.1', () => {
+        const a = server.address();
+        const port = typeof a === 'object' && a ? a.port : 0;
+        resolve(`http://127.0.0.1:${port}`);
+      });
+    });
+    const res = await (await fetch(base + '/integrations')).json() as {
+      agents: { id: string; configured: boolean; model?: string }[];
+      notifiers: { id: string; configured: boolean }[];
+    };
+    assert.equal(res.agents.find((a) => a.id === 'deepseek')?.configured, true);
+    assert.equal(res.notifiers.find((n) => n.id === 'dingtalk')?.configured, true);
+    await new Promise<void>((r) => server.close(() => r()));
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
 });
